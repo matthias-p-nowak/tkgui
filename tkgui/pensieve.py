@@ -5,16 +5,19 @@ import atexit
 from platformdirs import user_data_dir
 import os
 import sys
-
+import logging
 
 config = None
 saveFcts = set()
+
 
 class Empty:
     pass
 
 
 def saveOnExit():
+    global config
+    logging.debug("Saving config on exit")
     for f in saveFcts:
         f()
     with open(getFileName(), "wb") as f:
