@@ -1,9 +1,8 @@
+print("importing tkgui/main")
+
 import tkinter as tk
 from tkinter import Menu
-
-# import pensieve
-
-print("importing tkgui/main")
+from tkgui.pensieve import getConfig, saveFcts
 
 
 def createGui() -> tk.Tk:
@@ -13,4 +12,13 @@ def createGui() -> tk.Tk:
     fileMenu.add_command(label="Exit", underline=1, command=root.quit)
     mainMenu.add_cascade(label="File", underline=0, menu=fileMenu)
     root.config(menu=mainMenu)
+    cfg = getConfig()
+    if hasattr(cfg, "geometry"):
+        root.geometry(cfg.geometry)
+
+    def saveFct():
+        print("saving geometry")
+        cfg.geometry = root.geometry()
+
+    saveFcts.add(saveFct)
     return root
